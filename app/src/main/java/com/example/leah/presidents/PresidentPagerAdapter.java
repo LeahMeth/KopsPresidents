@@ -5,11 +5,13 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class PresidentPagerAdapter extends PagerAdapter{
 
     private President presidents[];
+    ImageView image;
 
     public PresidentPagerAdapter(President[] presidents){
         this.presidents = presidents;
@@ -30,6 +32,7 @@ public class PresidentPagerAdapter extends PagerAdapter{
         LayoutInflater inflater = LayoutInflater.from(container.getContext());
         View view = inflater.inflate(R.layout.president_pager_item, null);
 
+        ImageView image = (ImageView) view.findViewById(R.id.image);
         TextView name = (TextView) view.findViewById(R.id.name);
         TextView number = (TextView) view.findViewById(R.id.number);
         TextView birthDate = (TextView) view.findViewById(R.id.birthDate);
@@ -40,6 +43,7 @@ public class PresidentPagerAdapter extends PagerAdapter{
 
 
         President president = presidents[position];
+        //image.setImageDrawable(president.getImage());
         name.setText(president.getPresident());
         number.setText(String.valueOf(president.getNumber()));
         birthDate.setText(String.valueOf(president.getBirthYear()));

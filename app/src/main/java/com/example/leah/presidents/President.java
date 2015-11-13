@@ -1,9 +1,13 @@
 package com.example.leah.presidents;
 
 
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+
 import java.io.Serializable;
 
 public class President implements Serializable{
+
 
     private int number;
     private String president;
@@ -14,6 +18,7 @@ public class President implements Serializable{
     private String party;
 
     public President(){}
+
 
     public int getNumber() {
         return number;
