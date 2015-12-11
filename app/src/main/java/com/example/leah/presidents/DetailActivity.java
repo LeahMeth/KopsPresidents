@@ -7,18 +7,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 public class DetailActivity extends AppCompatActivity{
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-
+       super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        //call showPresidentDetail
+        PresidentDetailFragment fragment = getSupportFragmentManager()
+                .findFragmentById(R.id.detailFragment);
         President presidents[] =(President[]) getIntent().getSerializableExtra("PRESIDENTS");
-        PresidentPagerAdapter adapter = new PresidentPagerAdapter(presidents);
         int position = getIntent().getIntExtra("POSITION", 0);
-        viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(position);
+        fragment.showPresidentDetail(presidents, position);
+
     }
 }
