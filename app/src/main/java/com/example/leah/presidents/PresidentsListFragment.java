@@ -16,9 +16,7 @@ import com.google.gson.GsonBuilder;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-/**
- * Created by student1 on 12/10/2015.
- */
+
 public class PresidentsListFragment extends Fragment {
     RecyclerView recyclerView;
     @Nullable
@@ -48,7 +46,15 @@ public class PresidentsListFragment extends Fragment {
         InputStream in = getResources().openRawResource(R.raw.presidents);
 
         President presidents[] = gson.fromJson(new InputStreamReader(in), President[].class);
-        PresidentRecyclerViewAdapter adapter = new PresidentRecyclerViewAdapter(presidents);
+
+
+
+        OnPresidentSelectedListener listener = (OnPresidentSelectedListener) getActivity();
+
+
+        PresidentRecyclerViewAdapter adapter =
+                new PresidentRecyclerViewAdapter(presidents, listener);
+
         recyclerView.setAdapter(adapter);
     }
 }
