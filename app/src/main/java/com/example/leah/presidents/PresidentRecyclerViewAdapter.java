@@ -15,7 +15,7 @@ public class PresidentRecyclerViewAdapter extends RecyclerView.Adapter<President
 
     public PresidentRecyclerViewAdapter(President[] presidents, OnPresidentSelectedListener listener){
         this.presidents = presidents;
-        this.onClickListener = onClickListener;
+        this.listener = listener;
     }
 
 
@@ -46,5 +46,12 @@ public class PresidentRecyclerViewAdapter extends RecyclerView.Adapter<President
     public int getItemCount(){
         return presidents.length;
     }
+
+    @Override
+    public int getItemViewType(int position) {
+        return 0;
+    }
+
+
 
 }

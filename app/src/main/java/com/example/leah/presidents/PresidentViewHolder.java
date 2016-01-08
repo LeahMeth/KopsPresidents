@@ -6,16 +6,20 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class PresidentViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView name;
+    //need an @bind for each view
+    @Bind(R.id.name)
+     TextView name;
 
 
 
     public PresidentViewHolder (View itemView){
         super(itemView);
-
-        name = (TextView) itemView.findViewById(R.id.name);
+        ButterKnife.bind(this, itemView);
 
 
     }
