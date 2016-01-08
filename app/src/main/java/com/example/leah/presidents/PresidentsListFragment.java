@@ -15,6 +15,13 @@ import com.google.gson.GsonBuilder;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.GsonConverterFactory;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 public class PresidentsListFragment extends Fragment {
@@ -39,22 +46,36 @@ public class PresidentsListFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://raw.githubcontent.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        PresidentsService service =   retrofit.create(PresidentsService.class);
 
-        InputStream in = getResources().openRawResource(R.raw.presidents);
+        Call<List<President>> call = service.listPresidents();
+        call.enqueue(new Callback<List<President>>() {
 
-        President presidents[] = gson.fromJson(new InputStreamReader(in), President[].class);
+            //when there's a response from the server
+            @Override
+            public void onResponse(Response<List<President>> response) {
+                List<President> list = response.body();
+
+                OnPresidentSelectedListener listener = (OnPresidentSelectedListener) getActivity();
+
+                PresidentRecyclerViewAdapter adapter =
+                        new PresidentRecyclerViewAdapter(list.toArray(new President[0]), listener);
+
+                recyclerView.setAdapter(adapter);
+            }
+
+            //happens if there's an exception
+            @Override
+            public void onFailure(Throwable throwable) {
+
+            }
+        });
 
 
 
-        OnPresidentSelectedListener listener = (OnPresidentSelectedListener) getActivity();
-
-
-        PresidentRecyclerViewAdapter adapter =
-                new PresidentRecyclerViewAdapter(presidents, listener);
-
-        recyclerView.setAdapter(adapter);
     }
 }
